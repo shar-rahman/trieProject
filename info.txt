@@ -1,0 +1,21 @@
+> create trie from scratch using java code as a template
+> functions:
+ --- print
+  - print in order
+  - print post order
+  - print pre order
+  - print by prefix (calls searchPrefix)
+ --- insert
+ --- searchPrefix
+ --- searchWord
+ --- traverse 
+
+Amogh:
+-
+
+Shar:
+- Work on search methods
+
+Tri:
+
+Vijay:
