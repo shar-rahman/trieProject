@@ -7,6 +7,8 @@ using namespace std;
 
 bool searchMethod(Trie* trie);
 bool insertMethod(Trie* trie);
+void printMethod(Trie* trie);
+void printPrefix(TrieNode* trie, int n, char wordIndexes[]);
 
 ifstream inputFile;
 ofstream outputFile;
@@ -19,10 +21,10 @@ int main()
 	int choice;
 	int count = 0;
 	Trie* dictionary = new Trie();
-	inputFile.open("english_dictionary2.txt");
-	outputFile.open("english_dictionary2.txt", std::ios_base::app);
+	inputFile.open("English_Dictionary.txt");
+	outputFile.open("English_Dictionary.txt", std::ios_base::app);
 	cout << "Reading the English dictionary and storing in a trie." << endl;
-	
+		
 	while (getline(inputFile, toInsert, '\n'))
 	{
 		cout << "Entered: " << toInsert << endl;
@@ -41,13 +43,12 @@ int main()
 		cout << "\t   5. Exit" << endl;
 		cout << "\n\nEnter Choice: ";
 		cin >> choice;
-		if (choice == 1)
+		if (choice == 1) {
 			while (searchMethod(dictionary))
 				cout << "Search method exited" << endl;
-		if (choice == 2)
-		{
-			cout << "This is a work in progress lol" << endl;
 		}
+		if (choice == 2)
+			printMethod(dictionary);
 		if (choice == 3)
 			insertMethod(dictionary);
 		if (choice == 5)
@@ -92,19 +93,50 @@ bool insertMethod(Trie* trie) {
 	string toInsert;
 	cout << "*\tInsert method selected." << endl;
 	cout << "*\tEnter a word to insert.\nPress enter with a blank entry to exit." << endl;
-	while (1)
+	while (toInsert != "\n")
 	{
 		cin.clear();
 		cout << "*\tEnter word >";
-		cin >> toInsert;
-		if (toInsert == "\n")
-			break;
-		else
-		{
-			cout << "*\tInserting: " << toInsert << endl;
-			trie->insert(toInsert);
-			outputFile << endl << toInsert;
-		}
+		cout << "*\tInserting: " << toInsert << endl;
+		trie->insert(toInsert);
+		outputFile << endl << toInsert;
 	}
 	return false;
+}
+
+void printMethod(Trie* trie) {
+	int choice;
+	cout << "\n\n\t  How would you like your Trie printed?" << endl;
+	cout << "\t========================" << endl;
+	cout << "\t   1. Print inorder" << endl;
+	cout << "\t   2. Print preorder" << endl;
+	cout << "\t   3. Print postorder" << endl;
+	cout << "\t   4. Print by prefix" << endl;
+	cout << "\n\nEnter Choice: ";
+	cin >> choice;
+	/*if (choice == 1)
+		printInorder(trie);
+	if (choice == 2)
+		printPreorder(trie);
+	if (choice == 3)
+		printPostorder(trie);*/
+	if (choice == 4) {
+		cout << "\nHere is the tree printed by order of prefix: \n" << endl; 
+		char word[26];
+		printPrefix(trie->getRoot(), 0, word);
+	}
+}
+ 
+void printPrefix(TrieNode* root, int n, char wordIndexes[]){
+	if(root->getWordMarker()) {
+		wordIndexes[n] = '\0';
+		cout << wordIndexes << endl;
+	}
+	vector<TrieNode*> kids = root->children();
+	for(int x = 0; x < 26; x++) {
+		if(kids[x]) {
+			wordIndexes[n] = x + 'a';
+			printPrefix(kids[x],n+1,wordIndexes);
+		}
+	}
 }
