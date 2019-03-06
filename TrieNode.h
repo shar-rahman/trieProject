@@ -1,4 +1,6 @@
 #pragma once
+#include <iostream>
+#include <string>
 #include <vector>
 #include <cstring>
 #define ALPHABET_SIZE 26
@@ -12,6 +14,9 @@ public:
 	char getChar() { return storedChar; }
 	void setChar(char c) { storedChar = c; }
 	bool wordMarker() { return isEndOfWord; }
+	void setDef(string def) { this->definition = def; this->definitionExists = true; }
+	void incOccurrences() { this->occurrences++; }
+	int getOccurrences() { return occurrences; }
 	void setWordMarker() { isEndOfWord = true; }
 	TrieNode* findChild(char c);
 	void appendChild(TrieNode* child) { wordChildren.push_back(child); }
@@ -20,9 +25,12 @@ public:
 private:
 	char storedChar;
 	bool isEndOfWord;
+	bool definitionExists = false;
 	std::vector<TrieNode*> wordChildren;
-	std::vector<int> occurences;
+	int occurrences = 0;
+	string definition;
 };
+
 TrieNode* TrieNode::findChild(char key)
 {
 	for (size_t i = 0; i < this->children().size(); i++)

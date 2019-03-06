@@ -1,6 +1,8 @@
 #pragma once
+#include <iostream>
+#include <string>
 #include "TrieNode.h"
-
+using namespace std;
 
 class Trie {
 private:
@@ -39,7 +41,10 @@ void Trie::insert(string newWord)
 			rover = temp;
 		}
 		if (i == newWord.length() - 1)
+		{
+			rover->incOccurrences();
 			rover->setWordMarker();
+		}
 	}
 }
 
@@ -58,7 +63,11 @@ bool Trie::searchWord(string deleteWord)
 		}
 
 		if (rover->wordMarker())
+		{
+			std::cout << "\n~\tWord Found!" << std::endl;
+			std::cout << "~\tOccurrences: " << rover->getOccurrences() << std::endl;
 			return true;
+		}
 		else
 			return false;
 	}
