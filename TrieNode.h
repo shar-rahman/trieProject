@@ -9,19 +9,6 @@
 using namespace std;
 
 class TrieNode {
-public:
-	TrieNode() { storedChar = ' '; isEndOfWord = false; }
-	char getChar() { return storedChar; }
-	void setChar(char c) { storedChar = c; }
-	bool wordMarker() { return isEndOfWord; }
-	void setDef(string def) { this->definition = def; this->definitionExists = true; }
-	void incOccurrences() { this->occurrences++; }
-	int getOccurrences() { return occurrences; }
-	void setWordMarker() { isEndOfWord = true; }
-	TrieNode* findChild(char c);
-	void appendChild(TrieNode* child) { wordChildren.push_back(child); }
-	std::vector<TrieNode*> children() { return wordChildren; }
-
 private:
 	char storedChar;
 	bool isEndOfWord;
@@ -29,6 +16,26 @@ private:
 	std::vector<TrieNode*> wordChildren;
 	int occurrences = 0;
 	string definition;
+	string wordType;
+	bool typeExists;
+public:
+	TrieNode() { storedChar = ' '; isEndOfWord = false; }
+	char getChar() { return storedChar; }
+	void setChar(char c) { storedChar = c; }
+	bool wordMarker() { return isEndOfWord; }
+	void setDef(string def) { this->definition = def; this->definitionExists = true; }
+	string getDef() { return definition; };
+	bool defExists() { return this->definitionExists; }
+	void setType(string type) { this->wordType = type; this->typeExists = true; }
+	string getType() { return this->wordType; }
+	bool getTypeExist() { return this->typeExists; }
+	void incOccurrences() { this->occurrences++; }
+	int getOccurrences() { return occurrences; }
+	void setWordMarker() { isEndOfWord = true; }
+	TrieNode* findChild(char c);
+	void appendChild(TrieNode* child) { wordChildren.push_back(child); }
+	std::vector<TrieNode*> children() { return wordChildren; }
+
 };
 
 TrieNode* TrieNode::findChild(char key)
