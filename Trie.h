@@ -9,6 +9,7 @@ private:
 	TrieNode* root;
 public:
 	Trie() { this->setRoot(new TrieNode); };
+	~Trie() { delete this; }
 	void setRoot(TrieNode* newRoot) { root = newRoot; }
 	TrieNode* getRoot() { return this->root; }
 	void printTrie();
@@ -98,9 +99,9 @@ bool Trie::searchWord2(string deleteWord)
 		else
 			return false;
 	}
-
 	return false;
 }
+
 bool Trie::searchWord(string deleteWord)
 {
 	TrieNode* rover = root;

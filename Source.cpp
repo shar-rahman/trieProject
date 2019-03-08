@@ -3,6 +3,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <windows.h>
 
 using namespace std;
 
@@ -27,12 +28,6 @@ int main()
 	inputFile.open("bug_test.txt");
 	outputFile.open("bug_test.txt", std::ios_base::app);
 	cout << "Reading the English dictionary and storing in a trie." << endl;
-
-	std::cout << std::boolalpha;
-	std::cout << "good: " << inputFile.good() << '\n'
-		<< "bad:  " << inputFile.bad() << '\n'
-		<< "fail: " << inputFile.fail() << '\n'
-		<< "eof:  " << inputFile.eof() << '\n';
 	
 	while (getline(inputFile, toInsert, '\n') && !inputFile.eof())
 	{
@@ -58,10 +53,14 @@ int main()
 			addDefinition(dictionary);
 		if (choice == 5)
 			break;
+		else
+		{
+			cout << "Try again.\n";
+		}
 	}
 	cout << "Exiting...\n\n\n\n";
 	system("pause");
-	return 69;
+	return 0;
 }
 
 void addDefinition(Trie* trie)
@@ -138,18 +137,24 @@ void insertMethod(Trie* trie) {
 	system("CLS");
 
 	string toInsert;
-	cout << "*\tInsert method selected." << endl;
-	cout << "*\tEnter a word to insert.\nPress enter with a blank entry to exit." << endl;
+	cout << "*\tInsert Selected" << endl;
+	cout << "*\t=================" << endl;
+	cout << "*\tEnter a word to insert.\n*\tPress enter with a blank entry to exit.\n" << endl;
+	cin.ignore();
 	while (1)
 	{
-		cout << "Word Entry > ";
+		cin.clear();
+		cout << " Word Entry > ";
 		getline(cin, toInsert, '\n');
 		if (toInsert == "")
 			break;
 		else
 		{
+			cout << "*\t      ";
+			for (size_t i = 0; i < toInsert.length(); i++, Sleep(25))
+				cout << "^";
 			trie->insert(toInsert);
-			cout << "\n*\tWord inserted." << endl;
+			cout << "\n*\tWord inserted.\n" << endl;
 		}
 	}
 	return;
@@ -196,12 +201,14 @@ void mainMenuPrint()
 {
 	cout << flush;
 	system("CLS");
-	cout << "\n\n\t    Trie Main Menu" << endl;
-	cout << "\t========================" << endl;
+	cout << "\n\n\t   Trie Main Menu" << endl;
+	cout << "\t   =================" << endl;
 	cout << "\t   1. Search" << endl;
 	cout << "\t   2. Print Trie" << endl;
 	cout << "\t   3. Insert" << endl;
 	cout << "\t   4. Add Definition" << endl;
-	cout << "\t   5. Exit" << endl;
-	cout << "\n\nEnter Choice: ";
+	cout << "\t   5. Open" << endl;
+	cout << "\t   6. Save As" << endl;
+	cout << "\t   7. Exit" << endl;
+	cout << "\n\n Enter Choice > ";
 }
