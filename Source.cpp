@@ -161,40 +161,25 @@ void insertMethod(Trie* trie) {
 }
 
 void printMethod(Trie* trie) {
-	int choice;
-	cout << "\n\n\t  How would you like your Trie printed?" << endl;
-	cout << "\t========================" << endl;
-	cout << "\t   1. Print inorder" << endl;
-	cout << "\t   2. Print preorder" << endl;
-	cout << "\t   3. Print postorder" << endl;
-	cout << "\t   4. Print by prefix" << endl;
-	cout << "\n\nEnter Choice: ";
-	cin >> choice;
-	/*if (choice == 1)
-		printInorder(trie);
-	if (choice == 2)
-		printPreorder(trie);
-	if (choice == 3)
-		printPostorder(trie);*/
-	if (choice == 4) {
-		cout << "\nHere is the tree printed by order of prefix: \n" << endl;
-		char word[26];
-		printPrefix(trie->getRoot(), 0, word);
-	}
+	cout << "\nHere is the tree printed by order of prefix: \n" << endl;
+	char word[26];
+	printPrefix(trie->getRoot(), 0, word);
 }
 
 void printPrefix(TrieNode* root, int n, char wordIndexes[]) {
-	if (root->wordMarker()) {
+	//cout << root->children().size() << root->getChar() << endl;
+	if(root->wordMarker() == true) {
 		wordIndexes[n] = '\0';
 		cout << wordIndexes << endl;
 	}
-	vector<TrieNode*> kids = root->children();
-	for (int x = 0; x < 26; x++) {
-		if (kids[x]) {
+	int x;
+	for(x = 0; x < root->children().size(); x++) {
+		if(root->children()[x] != NULL) {
 			wordIndexes[n] = x + 'a';
-			printPrefix(kids[x], n + 1, wordIndexes);
+			printPrefix(root->children()[x],n+1,wordIndexes);
 		}
 	}
+	
 }
 
 void mainMenuPrint()
