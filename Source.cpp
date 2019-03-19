@@ -12,7 +12,7 @@ void searchMethod(Trie* trie);
 void insertMethod(Trie* trie);
 void addDefinition(Trie* trie);
 void printMethod(Trie* trie);
-void printPrefix(TrieNode* trie, int n, char wordIndexes[]);
+void print(TrieNode* root, char word[], int level);
 
 ifstream inputFile;
 ofstream outputFile;
@@ -162,24 +162,25 @@ void insertMethod(Trie* trie) {
 
 void printMethod(Trie* trie) {
 	cout << "\nHere is the tree printed by order of prefix: \n" << endl;
-	char word[26];
-	printPrefix(trie->getRoot(), 0, word);
+	char arr[1000];
+	print(trie->getRoot(), arr ,0);
 }
 
-void printPrefix(TrieNode* root, int n, char wordIndexes[]) {
-	//cout << root->children().size() << root->getChar() << endl;
-	if(root->wordMarker() == true) {
-		wordIndexes[n] = '\0';
-		cout << wordIndexes << endl;
-	}
-	int x;
-	for(x = 0; x < root->children().size(); x++) {
-		if(root->children()[x] != NULL) {
-			wordIndexes[n] = x + 'a';
-			printPrefix(root->children()[x],n+1,wordIndexes);
-		}
-	}
+void print(TrieNode* root, char word[], int level) {
 	
+    if (root->wordMarker()) { 
+        word[level] = '\0'; 
+        cout << word << endl; 
+    } 
+  	
+  	int x; 
+    for (x = 0; x < root->children().size(); x++) {
+        if (root->children()[x])  {  
+           	word[level] = root->children()[x]->getChar(); 
+            print(root->children()[x], word, level + 1); 
+        } 
+    } 
+
 }
 
 void mainMenuPrint()
