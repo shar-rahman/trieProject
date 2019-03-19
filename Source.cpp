@@ -161,7 +161,7 @@ void insertMethod(Trie* trie) {
 }
 
 void printMethod(Trie* trie) {
-	cout << "\nHere is the tree printed by order of prefix: \n" << endl;
+	cout << "\nHere is the trie printed in order of input: \n" << endl;
 	char arr[1000];
 	print(trie->getRoot(), arr ,0);
 }
