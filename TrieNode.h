@@ -3,38 +3,42 @@
 #include <string>
 #include <vector>
 #include <cstring>
-#define ALPHABET_SIZE 26
-#define WORD_SIZE_MAX 32
 
 using namespace std;
 
 class TrieNode {
 private:
+	//Essential
 	char storedChar;
 	bool isEndOfWord;
-	bool definitionExists = false;
 	std::vector<TrieNode*> wordChildren;
-	int occurrences = 0;
+	//For program functions
+	bool definitionExists;
+	int occurrences;
 	string definition;
 	string wordType;
 	bool typeExists;
 public:
-	TrieNode() { storedChar = ' '; isEndOfWord = false; }
-	char getChar() { return storedChar; }
-	void setChar(char c) { storedChar = c; }
-	bool wordMarker() { return isEndOfWord; }
+	//Constructor & Setters
+	TrieNode() { storedChar = ' '; isEndOfWord = false; definitionExists = false; occurrences = 0; }
+	void setChar(char c) { this->storedChar = c; }
 	void setDef(string def) { this->definition = def; this->definitionExists = true; }
-	string getDef() { return definition; };
-	bool defExists() { return this->definitionExists; }
 	void setType(string type) { this->wordType = type; this->typeExists = true; }
+	void setWordMarker() { this->isEndOfWord = true; }
+	void incOccurrences() { this->occurrences++; }
+	//Getters
+	char getChar() { return this->storedChar; }
+	bool wordMarker() { return this->isEndOfWord; }
+	string getDef() { return this->definition; };
+	bool defExists() { return this->definitionExists; }
 	string getType() { return this->wordType; }
 	bool getTypeExist() { return this->typeExists; }
-	void incOccurrences() { this->occurrences++; }
-	int getOccurrences() { return occurrences; }
-	void setWordMarker() { isEndOfWord = true; }
+	int getOccurrences() { return this->occurrences; }
+	//Trie Functions
 	TrieNode* findChild(char c);
-	void appendChild(TrieNode* child) { wordChildren.push_back(child); }
-	std::vector<TrieNode*> children() { return wordChildren; }
+	void appendChild(TrieNode* child) { this->wordChildren.push_back(child); }
+	std::vector<TrieNode*> children() { return this->wordChildren; }
+	~TrieNode() { delete this; }
 
 };
 

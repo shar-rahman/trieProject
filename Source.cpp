@@ -25,9 +25,9 @@ int main()
 	int choice;
 	int count = 0;
 	Trie* dictionary = new Trie();
-	inputFile.open("bug_test.txt");
-	outputFile.open("bug_test.txt", std::ios_base::app);
-	cout << "Reading the English dictionary and storing in a trie." << endl;
+	cout << "Enter the name of the text file: " << endl;
+	cin >> file;
+	inputFile.open(file + ".txt");
 	
 	while (getline(inputFile, toInsert, '\n') && !inputFile.eof())
 	{
@@ -46,13 +46,13 @@ int main()
 		if (choice == 1) 
 			searchMethod(dictionary);
 		if (choice == 2)
-			printMethod(dictionary);
-		if (choice == 3)
 			insertMethod(dictionary);
-		if (choice == 4)
+		if (choice == 3)
 			addDefinition(dictionary);
-		if (choice == 5)
+		if (choice == 4)
 			break;
+		if (choice == 5)
+			printMethod(dictionary);
 		else
 		{
 			cout << "Try again.\n";
@@ -161,25 +161,27 @@ void insertMethod(Trie* trie) {
 }
 
 void printMethod(Trie* trie) {
+	cout << flush;
+	system("CLS");
 	cout << "\nHere is the trie printed in order of input: \n" << endl;
 	char arr[1000];
-	print(trie->getRoot(), arr ,0);
+	print(trie->getRoot(), arr, 0);
 }
 
 void print(TrieNode* root, char word[], int level) {
-	
-    if (root->wordMarker()) { 
-        word[level] = '\0'; 
-        cout << word << endl; 
-    } 
-  	
-  	int x; 
-    for (x = 0; x < root->children().size(); x++) {
-        if (root->children()[x])  {  
-           	word[level] = root->children()[x]->getChar(); 
-            print(root->children()[x], word, level + 1); 
-        } 
-    } 
+
+	if (root->wordMarker()) {
+		word[level] = '\0';
+		cout << word << endl;
+	}
+
+	int x;
+	for (x = 0; x < root->children().size(); x++) {
+		if (root->children()[x]) {
+			word[level] = root->children()[x]->getChar();
+			print(root->children()[x], word, level + 1);
+		}
+	}
 
 }
 
@@ -190,11 +192,8 @@ void mainMenuPrint()
 	cout << "\n\n\t   Trie Main Menu" << endl;
 	cout << "\t   =================" << endl;
 	cout << "\t   1. Search" << endl;
-	cout << "\t   2. Print Trie" << endl;
-	cout << "\t   3. Insert" << endl;
-	cout << "\t   4. Add Definition" << endl;
-	cout << "\t   5. Open" << endl;
-	cout << "\t   6. Save As" << endl;
-	cout << "\t   7. Exit" << endl;
+	cout << "\t   2. Insert" << endl;
+	cout << "\t   3. Add Definition" << endl;
+	cout << "\t   4. Exit" << endl;
 	cout << "\n\n Enter Choice > ";
 }

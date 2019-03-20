@@ -12,10 +12,9 @@ public:
 	~Trie() { delete this; }
 	void setRoot(TrieNode* newRoot) { root = newRoot; }
 	TrieNode* getRoot() { return this->root; }
-	void printTrie();
 	void insert(string newWord);
 	bool searchWord(string s);
-	bool searchWord2(string deleteWord);
+	bool searchWord2(string s);
 	bool setDef(string word, string definition, string type);
 };
 
@@ -78,15 +77,15 @@ void Trie::insert(string newWord)
 }
 
 
-bool Trie::searchWord2(string deleteWord)
+bool Trie::searchWord2(string search)
 {
 	TrieNode* rover = root;
 
 	while (rover != NULL)
 	{
-		for (size_t i = 0; i < deleteWord.length(); i++)
+		for (size_t i = 0; i < search.length(); i++)
 		{
-			TrieNode* temp = rover->findChild(deleteWord[i]);
+			TrieNode* temp = rover->findChild(search[i]);
 			if (temp == NULL)
 				return false;
 			rover = temp;
@@ -102,15 +101,15 @@ bool Trie::searchWord2(string deleteWord)
 	return false;
 }
 
-bool Trie::searchWord(string deleteWord)
+bool Trie::searchWord(string s)
 {
 	TrieNode* rover = root;
 
 	while (rover != NULL)
 	{
-		for (size_t i = 0; i < deleteWord.length(); i++)
+		for (size_t i = 0; i < s.length(); i++)
 		{
-			TrieNode* temp = rover->findChild(deleteWord[i]);
+			TrieNode* temp = rover->findChild(s[i]);
 			if (temp == NULL)
 				return false;
 			rover = temp;
@@ -120,7 +119,7 @@ bool Trie::searchWord(string deleteWord)
 		{
 			std::cout << "\n~\tWord Found!" << std::endl;
 			std::cout << "~\tOccurrences: " << rover->getOccurrences() << std::endl;
-			cout << "~\t" << deleteWord;
+			cout << "~\t" << s;
 			if (rover->defExists() && rover->getTypeExist())
 			{
 				cout << " (" << rover->getType() << ".): " << rover->getDef() << ".";
@@ -130,7 +129,7 @@ bool Trie::searchWord(string deleteWord)
 				cout << ": " << rover->getDef() << "." << endl;
 			}
 			cout << "\n~\t";
-			for (size_t i = 0; i < deleteWord.length(); i++)
+			for (size_t i = 0; i < s.length(); i++)
 				cout << "^";
 			return true;
 		}
